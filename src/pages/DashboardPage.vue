@@ -5,18 +5,12 @@ import LibrosList from '@/components/LibrosList.vue'
 
 <template>
   <section class="space-y-4">
-    <div class="flex items-center justify-between">
+    <div class="flex items-center justify-between" v-if="$route.path ==='/'">
       <h1 class="text-xl font-semibold">Dashboard</h1>
-      <!-- ✅ NEW: botón para ir a la Biblioteca -->
-      <RouterLink
-        to="/biblioteca"
-        class="px-3 py-1.5 rounded border text-sm hover:bg-neutral-50"
-      >
-        Biblioteca
-      </RouterLink>
     </div>
 
-    <!-- ✅ Lista con acciones deshabilitadas -->
-    <LibrosList :accionesHabilitadas="false" />
+    <!--Lista con acciones deshabilitadas -->
+    <LibrosList :accionesHabilitadas="false" v-if="$route.path ==='/'"/>
+    <RouterView />
   </section>
 </template>

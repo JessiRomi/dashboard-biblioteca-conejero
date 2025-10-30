@@ -1,4 +1,3 @@
-<!-- pages/components/LibroCard.vue -->
 <script setup lang="ts">
 import type { Libro } from '@/models/libro'
 import { useBibliotecaStore } from '@/stores/biblioteca'

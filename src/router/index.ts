@@ -6,16 +6,16 @@ import LibrosForm from '@/components/LibrosForm.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    { path: '/', 
-      name: 'dashboard', 
+    {
+      path: '/',
+      name: 'dashboard',
       component: DashboardPage,
       children: [
-        { path: 'biblioteca',component: BibliotecaPage },
-        { path: 'libros/nuevo',component: LibrosForm },
-      ]
+      { path: 'biblioteca', component: BibliotecaPage },
+      { path: 'biblioteca/nuevo', component: LibrosForm },
+      ],
     },
   ],
-});
+})
 
 export default router
-

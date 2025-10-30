@@ -25,7 +25,8 @@ function agregar() {
   autor.value = ''
   paginas.value = null
   disponible.value = true
-  // 🔁 Volver a la lista
+ 
+  // Volver a la lista
   router.push('/libros')
 }
 </script>

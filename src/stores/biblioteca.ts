@@ -26,7 +26,7 @@ export const useBibliotecaStore = defineStore('biblioteca', {
     byPaginasAsc: (s) => [...s.data].sort((a, b) => a.paginas - b.paginas),
     byPaginasDesc:(s) => [...s.data].sort((a, b) => b.paginas - a.paginas),
 
-    // ✅ Nuevos: segmentación por estado
+    // Filtros
     disponibles:  (s) => s.data.filter(l => l.disponible),
     prestados:    (s) => s.data.filter(l => !l.disponible),
   },
