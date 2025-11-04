@@ -1,19 +1,22 @@
 <script setup lang="ts">
+import Navbar from './components/Navbar.vue';
+import CartSidebar from './components/CartSidebar.vue';
+import { ref } from 'vue';
+
+const isCartOpen = ref(false);
+
 </script>
 
-
 <template>
-  <div class="min-h-dvh bg-neutral-50 text-neutral-900">
-    <header class="bg-white border-b">
-      <nav class="mx-auto max-w-6xl p-4 flex gap-3">
-        <RouterLink to="/" class="px-3 py-1.5 rounded hover:bg-neutral-100">Dashboard</RouterLink>
-        <RouterLink to="/biblioteca" class="px-3 py-1.5 rounded hover:bg-neutral-100">Biblioteca</RouterLink>
-      </nav>
-    </header>
-
-    <main class="mx-auto max-w-6xl p-6">
+  <div class="min-h-screen bg-emerald-50 text-gray-800">
+    <Navbar @toggle-cart="isCartOpen = !isCartOpen" />
+    <main class="container mx-auto px-4 py-6">
       <RouterView />
     </main>
+    <CartSidebar :open="isCartOpen" @close="isCartOpen = false" />
   </div>
 </template>
+
+<style scoped></style>
+
 
