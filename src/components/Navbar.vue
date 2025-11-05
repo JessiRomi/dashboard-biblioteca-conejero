@@ -1,8 +1,12 @@
 <script setup lang="ts">
 
-import { defineEmits, ref } from 'vue'
+import { defineEmits, ref, computed } from 'vue'
+import { useCartStore } from '@/stores/cartStore';
+
 const emit = defineEmits(['toggle-cart'])
 const isOpen = ref(false)
+const cart = useCartStore()
+const totalItems = computed(() => cart.totalItems)
 
 </script>
 
@@ -19,21 +23,24 @@ const isOpen = ref(false)
 
             <div class="flex items-center space-x-2">
                 <!-- Botón carrito -->
-                <button @click="emit('toggle-cart')"
-                    class="relative p-2 bg-emerald-700 rounded-sm hover:bg-emerald-800">
+                <button
+                 class="relative p-2 bg-emerald-700 rounded-sm hover:bg-emerald-800"
+                  @click="emit('toggle-cart')"
+                  aria-label="Abrir carrito">
 
                     <!-- ACA INDICAMOS EN EL ICONO DEL CARRO CUANTOS LIBROS HAY EN EL CARRO -->
                     <!-- CAMBIAR 'false' por sintaxis: si hay mas de 0 -> true -->
-                    <div v-if="true"
-                        class="p-1 h-4 bg-red-600 rounded-full text-white absolute z-10 -top-2 -right-2 flex justify-center items-center text-sm font-semibold">
-                        <!-- VARIABLE PARA INDICAR CANTIDAD VA ACA -->
-                    </div>
 
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 9h14l-2-9M10 21a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z" />
                     </svg>
+                    <span
+                    v-if="totalItems"
+                     class="absolute -top-1 -right-1 text-xs bg-white text-emerald-700 font-bold px-1.5 py-0.5 rounded-full">
+                        {{ totalItems }}
+                    </span>
                 </button>
 
                 <!-- Botón móvil -->

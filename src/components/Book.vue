@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import type { Book } from '@/models/Book';
 import { defineProps } from 'vue';
+import { useCartStore} from '@/stores/cartStore';
 
 const props = defineProps<{ book: Book }>()
 
+const cart = useCartStore()
 </script>
 
 <template>
@@ -14,7 +16,9 @@ const props = defineProps<{ book: Book }>()
         <h3 class="text-lg font-semibold mt-3">{{ book.title }}</h3>
         <p class="text-sm text-gray-600">por {{ book.author }}</p>
         <p class="mt-2 text-emerald-700 font-medium">${{ book.price }}</p>
-        <button class="mt-3 w-full bg-emerald-600 text-white py-2 rounded-lg hover:bg-emerald-700 transition">
+        <button class="mt-3 w-full bg-emerald-600 text-white py-2 rounded-lg hover:bg-emerald-700 transition"
+         @click="cart.addBook(book)"
+        >
             Agregar al carrito
         </button>
     </div>

@@ -1,8 +1,15 @@
 <script setup lang="ts">
 import { defineProps, defineEmits } from 'vue'
+import { useCartStore } from '@/stores/cartStore';
+import { computed } from 'vue';
 
 const props = defineProps<{ open: boolean }>()
 const emit = defineEmits(['close'])
+const cart = useCartStore()
+const items = computed (() => cart.cart)
+const TotalItems = computed (() => cart.totalItems)
+const TotalPrice = computed (() => cart.totalPrice)
+
 </script>
 
 <template>
@@ -26,11 +33,13 @@ const emit = defineEmits(['close'])
 
         <!-- Lista de libros -->
         <div class="flex-1 overflow-y-auto p-4 space-y-4">
-            <div v-for="n in 3" :key="n"
+            <div v-if="items.length">
+             <div v-for="book in items"
+                :key="book.id"
                 class="flex items-center justify-between bg-emerald-50 border border-emerald-100 p-3 rounded-lg">
                 <div>
-                    <h3 class="font-medium text-gray-800">Libro {{ n }}</h3>
-                    <p class="text-sm text-gray-500">$ {{ n * 2000 }}</p>
+                    <h3 class="font-medium text-gray-800">Libro {{ book.title }}</h3>
+                    <p class="text-sm text-gray-500">$ {{book.author }}</p>
                 </div>
                 <button class="text-red-500 hover:text-red-700">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
@@ -41,18 +50,19 @@ const emit = defineEmits(['close'])
                 </button>
             </div>
         </div>
+    </div>
 
         <!-- Totales -->
         <div class="p-4 border-t border-gray-200 bg-emerald-100">
             <div class="flex justify-between mb-2">
                 <span class="font-medium text-gray-700">Total de items:</span>
-                <span>3</span>
+                <span>{{ TotalItems }}</span>
             </div>
             <div class="flex justify-between mb-4">
                 <span class="font-medium text-gray-700">Total:</span>
-                <span class="font-semibold text-emerald-700">$6000</span>
+                <span class="font-semibold text-emerald-700">{{ TotalPrice }}</span>
             </div>
-            <button class="w-full bg-emerald-600 text-white py-2 rounded-lg hover:bg-emerald-700 transition">
+            <button class="w-full bg-emerald-600 text-white py-2 rounded-lg hover:bg-emerald-700 transition" @click="cart.clearCart()">
                 Finalizar compra
             </button>
         </div>

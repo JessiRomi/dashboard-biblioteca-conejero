@@ -1,28 +1,36 @@
- import { ref } from 'vue'
- import { defineStore } from 'pinia'
+import { defineStore } from 'pinia'
+import type { Book, BookInCart } from '@/models/Book'
 
- 
-   interface BookInCart {
-     id: number
-     title: string
-     author: string
-     price: number
-   }
+export const useCartStore = defineStore('cart', {
+  state: () => ({
+    cart: [] as BookInCart[],
+  }),
+  getters: {
+    totalItems: (state) => state.cart.reduce((acc, item) => acc + item.qty, 0),
+    totalPrice: (state) => state.cart.reduce((acc, item) => acc + item.price * item.qty, 0),
+  },
+  actions: {
+  
+    addBook(book: Book) {
+      const existing = this.cart.find((b) => b.id === book.id)
+      if (existing) {
+        existing.qty += 1
+      } else {
+        this.cart.push({ ...book, qty: 1 })
+      }
+    },
 
- export const useBookStore = defineStore('book',{
-    state: () => ({
-        cart: [] as BookInCart[]
-    }),
-    actions: {
-        addTBook(book: BookInCart) {
-            this.cart.push(book)
-        },
-        removeBook(book: BookInCart) {
-            this.cart = this.cart.filter(book => book.id !== book.id)
-        }
+    removeBook(id: number) {
+      this.cart = this.cart.filter((b) => b.id !== id)
+    },
 
-     
- }
- })
+    clearCart() {
+      this.cart = []
+    },
+  },
+})
+
+    
+
     
    
